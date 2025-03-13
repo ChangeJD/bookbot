@@ -1,21 +1,24 @@
-def get_book_text(filepath):
-    with open(filepath) as f:
-        file_contents = f.read()
-        return file_contents
+import sys
 
-def num_words(book_text):
-    words = book_text.split()
-    word_counter = 0
-    for word in words:
-        word_counter += 1
-    return word_counter
-
-
+if len(sys.argv) != 2:
+    print("Usage: python3 main.py <path_to_book>")
+    sys.exit(1)
 
 def main():
-    book = get_book_text("books/frankenstein.txt")
-    word_count = num_words(book)
-    print(f"{word_count} words found in the document")
+    book_path = sys.argv[1]
+    book = get_book_text(book_path)
+    word_count = get_num_words(book)
+    print(f"Found {word_count} total words")
+    symbol_count = symbol_counter(book)
+    sorted_list = list_dict(symbol_count)
+    for char_dict in sorted_list:
+        char = char_dict["char"]
+        count = char_dict["count"]
+        if char.isalpha():
+            print(f"{char}: {count}")
+
+from stats import get_num_words, get_book_text, symbol_counter, list_dict, sort_on
+
 
 
 main()
